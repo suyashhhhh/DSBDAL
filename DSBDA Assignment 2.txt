@@ -1,0 +1,123 @@
+import pandas as pd
+import numpy  as np
+
+df=pd.read_csv("StudentsPerformance.csv")
+
+df
+
+df.shape
+
+df.isnull().sum()
+
+df.isnull()
+
+df['math score']=df['math score'].interpolate()
+df
+
+df.isnull().sum()
+
+df['writing score']=df['writing score'].fillna(method = 'ffill')
+df
+
+df.isnull().sum()
+
+
+df['placement_score']=df['placement_score'].fillna(method='bfill')
+df
+
+df.isnull().sum()
+
+df['club_join_date']=df['club_join_date'].replace(to_replace=np.nan, value='2019')
+df
+
+df.isnull().sum()
+
+df['placement_offer_count']=df['placement_offer_count'].fillna('1')
+df
+
+df.isnull().sum()
+
+df,dtypes
+
+
+df['math score'] = df['math score'].astype('int64')
+df['reading score'] = df['reading score'].astype('int64')
+df['writing score'] = df['writing score'].astype('int64')
+df['placement_score']=df['placement_score'].astype('int64')
+df['club_join_date']=df['club_join_date'].astype('int64')
+df['placement_offer_count']=df['placement_offer_count'].astype('int64')
+
+df.dtypes
+
+columns = ['math score','reading score','writing score','placement_score']
+df.boxplot(columns)
+plt.show()  # to print the plot
+
+np.where(df['math score']<60)  #gives the row numbers
+
+np.where(df['math score']>80)
+np.where(df['reading_score'] < 75)
+np.where(df['reading_score'] > 95)
+np.where(df['writing_score'] < 60)
+np.where(df['writing_score'] > 80)
+np.where(df['placement_score'] < 75)
+np.where(df['placement_score'] > 100)
+np.where((df['placement_score'] < 75) & (df['placement_offer_count'] > 1))
+np.where(((df['placement_score'] > 75) & (df['placement_score'] <= 85)) & ((df['placement_offer_count'] > 2 | (df['placement_offer_count'] < 2)))
+np.where((df['placement_score'] > 85) & (df['placement_offer_count'] < 3))
+
+#outlier detection
+
+df[(df['math_score'] < 60 | (df['math_score'] > 80)]
+df[(df['reading_score'] < 75 | (df['reading_score'] > 95)]
+df[(df['writing_score'] < 60 | (df['writing_score'] > 80)]
+df[(df['placement_score'] < 75 | (df['placement_score'] > 100)]
+df[(df['placement_score'] < 75 & (df['placement_offer_count'] > 1)]
+df[((df['placement_score'] > 75 & (df['placement_score'] <= 85)) & ((df['placement_offer_count'] > 2) | (df['placement_offer_count'] < 2 ))]
+
+#outlier removal
+
+new_df1 = df[((df.math_score >= 60) & (df.math_score <= 80)) &
+	     ((df.reading_score >= 75) & (df.reading_score <= 95)) & 
+	     ((df.writing_score >= 60) & (df.writing_score <= 80)) &
+	     ((df.placement_score >= 75) & (df.placement_score <= 100)) &
+             ((df.club_join_date >= 2018) & (df.club_join_date <= 2021))]
+new_df1
+
+new_df1[(new_df1['placement_score'] < 75 | (df['placement_offer_count'] > 1)]
+new_df1[(new_df1['placement_score'] >= 75 | (df['placement_score'] <= 85))
+&((new_df1['placement_offer_count'] > 2 | (new_df1['placement_offer_count'] < 2 ))]
+
+new_df2 = new_df1[
+	((new_df1.placement_score < 75 & (new_df1.placement_offer_count == 1)) |
+	((new_df1.placement_score >= 75 & (new_df1.placement_score <=85)) &
+	((new_df1.placement_score > 85 & (new_df1.placement_offer_count == 3))]
+new_df2
+new_df2.shape
+
+#Data Transformation
+from sklearn.preprocessing import MinMaxScaler
+scaling = MinMaxScaler()
+scaling.fit_transform(new_df2[['math_score','reading_score','writing_score','placement_score']])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

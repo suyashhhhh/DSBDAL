@@ -1,0 +1,119 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+df=pd.read_csv("Social_Network_Ads.csv")
+
+df
+
+df.shape
+
+df.columns
+
+df.dtypes
+
+df.info()
+
+df.describe()
+
+x=df.iloc[:,[2,3]].values 
+#selecting specific columns to create a NumPy array containing the values of those columns.iloc=integer location
+
+x
+
+y=df.iloc[:,4].values
+y
+
+#splitting data into 75% and 25% testing data
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.25,random_state=0)
+
+x_test.shape
+
+y_test
+
+y_test.shape
+
+#Data Standardization 
+from sklearn.preprocessing import StandardScaler
+sc_x=StandardScaler()
+x_train=sc_x.fit_transform(x_train)
+x_test = sc_x.fit_transform(x_test)
+x_train
+
+#initializing logistic Regression model and training the model
+from sklearn.linear_model import LogisticRegression
+classifier = LogisticRegression(random_state = 0)
+classifier.fit(x_train,y_train)
+(The output of fitting a Logistic Regression model (classifier.fit(x_train, y_train)) will not be a direct human-readable output.
+Instead, it will train the model on the provided training data (x_train, y_train).)
+
+#Prediction 
+y_pred = classifier.predict(x_test)
+y_pred
+
+y_test
+
+#Confusion Matrix
+from sklearn.metrics import confusion_matrix 
+#The confusion matrix is a useful tool for evaluating the performance of a classification model.
+cm = confusion_matrix(y_test,y_pred)
+cm
+
+#Calculating accuracy of model
+from sklearn.metrics import accuracy_score
+accuracy = accuracy_score(y_test,y_pred)*100
+accuracy
+
+#True Positive :Actually True,Predicted True
+
+tp=cm[0,0]
+print('True positive:',tp)
+
+#False Positive :Actually False,Predicted True
+
+fp=cm[0,1]
+print('False positive:',fp)
+
+#False negative :Actually True,Predicted False
+
+fn=cm[1,0]
+print('False Negative:',fn)
+
+#True negative :Actually False,Predicted False
+
+tn=cm[1,1]
+print('True negative:',tn)
+
+#Accuracy
+
+accuracy_cm = ((tp+tn)/(tp+fp+fn+tn))
+print('Accuracy:',accuracy_cm*100)
+
+#Error Rate  the error rate is a measure of how often the classifier is wrong. 
+#Therefore, a lower error rate indicates better performance, while a higher error rate indicates poorer performance.
+
+error_rate_cm=((fp+fn)/(tp+fp+fn+tn))
+print('Error Rate :',error_rate_cm*100) 
+
+#precision
+#Precision focuses on the accuracy of positive predictions
+#Precision is useful when the cost of false positives is high, and you want to minimize the number of false positives while maximizing the number of true positives.
+precision_cm = (tp/(tp+fp))
+print('Precision :',precision_cm*100)
+
+#recall  is also called sensitivity
+#recall measures the model's ability to identify positive instances correctly and is particularly important when minimizing false negatives is crucial,
+
+recall_cm = (tp/(tp+fn))
+print('Sensitivity:',recall_cm*100)
+
+#Specificity
+#Specificity, also known as the true negative rate, is a metric used in binary classification to measure how well a model identifies true negative instances from 
+#all actual negative instances in the dataset
+
+specificity_cm = (tn/(tn+fp))
+print('Specificity:',specificity_cm*100)
+
+

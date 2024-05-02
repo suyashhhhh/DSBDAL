@@ -1,0 +1,42 @@
+import pandas as pd
+import numpy as np
+
+df=pd.read_csv("iris.csv")
+
+df
+
+#data preprocessing
+df.shape
+
+df.isnull().sum()
+
+df.dtypes
+
+df.info()
+
+df.drop(columns = 'Id', inplace = True)
+df
+
+#Calculating minimum values
+min_value = df['SepalLength'].dropna().min() #.dropna(): This removes any missing values (NaNs) from the selected column.
+min_value
+
+
+df.describe()
+
+numerical_columns = df.select_dtypes(include=['number'])
+quantile_25 = numerical_columns.quantile(0.25)
+
+quantile_25
+
+
+numerical_columns.quantile(0.50)
+
+numerical_columns.quantile(0.75)
+
+numerical_columns = df.select_dtypes(include=np.number)
+min_values = np.min(numerical_columns)
+min_values
+
+numerical_columns = df.select_dtypes(include=np.number)
+np.max(numerical_columns)

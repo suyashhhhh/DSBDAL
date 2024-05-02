@@ -1,0 +1,70 @@
+get_ipython().system('pip list')
+
+pip install nltk
+
+import nltk
+nltk.download('punkt')
+
+from nltk import tokenize
+from nltk.tokenize import sent_tokenize
+text="""Good day everyone, how are you all today ? its fuun learning data analysiss . hope you"""
+tokenized_text=sent_tokenize(text)
+print(tokenized_text)
+
+from nltk.tokenize import word_tokenize
+tokenized_word=word_tokenize(text)
+print(tokenized_word)
+
+from nltk.probability import FreqDist
+fdist=FreqDist(tokenized_word)
+print(fdist)
+
+fdist.most_common(4)
+
+import matplotlib.pyplot as plt
+fdist.plot(30,cumulative=False)
+plt.show()
+
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+stop_words=set(stopwords.words("english"))
+print(stop_words)
+
+filtered_sent=[]
+for i in tokenized_word:
+    if i not in stop_words:
+        filtered_sent.append(i)
+print(tokenized_word)
+print(filtered_sent)
+
+from nltk.stem import PorterStemmer
+from nltk.tokenize import sent_tokenize,word_tokenize
+ps=PorterStemmer()
+stemmed_words=[]
+for i in filtered_sent:
+    stemmed_words.append(ps.stem(i))
+print(filtered_sent)
+print(stemmed_words)
+
+from nltk.stem.wordnet import WordNetLemmatizer
+lem=WordNetLemmatizer()
+from nltk.stem.porter import PorterStemmer
+stem=PorterStemmer()
+word="flying"
+print(lem.lemmatize(word, "v"))
+print(stem.stem(word))
+
+
+sent ="albert einesdtine was born in ulm , germany in 1879."
+tokens=nltk.word_tokenize(sent)
+print(tokens)
+
+nltk.download('averaged_perceptron_tagger')
+nltk.pos_tag(tokens)
+
+from collections import Counter
+sentence = "texas ag university is located in texas"
+term_frequency = Counter(sentence.split())
+
+print(term_frequency)
+

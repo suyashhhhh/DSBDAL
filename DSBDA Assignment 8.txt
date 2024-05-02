@@ -1,0 +1,44 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline 
+import seaborn as sns
+
+df=pd.read_csv('train.csv')
+df
+
+#Data Visualization
+import seaborn as sns
+sns.displot(df['Pclass']) 
+#Visualizing the distribution plot of univariate(single variable)
+
+sns.displot(df['Age'])
+
+
+sns.displot(df['Age'],bins=40)
+#In data visualization, "bins" refer to the intervals into which you divide the data.
+
+sns.displot(df['Age'],bins=20, kde=True,rug =True)
+# KDE is used to estimate the probability density function (PDF) of a continuous random variable. Instead of representing the data as discrete points lik
+#Rug Plots: Another optional feature is the inclusion of rug plots along the x-axis, which mark the actual data points. 
+#Rug plots can be helpful in understanding the density of observations at specific values.
+
+sns.jointplot(x=df['Age'], y=df['Fare'],kind='scatter')
+#scatter plot, which is suitable for visualizing the relationship between two continuous variables ('Age' and 'Fare' in this case).
+
+sns.jointplot(x=df['Age'], y=df['Fare'],kind='hex')
+#Hexbin plots are a type of bivariate histogram where the plot area is divided into hexagons, and the color intensity or density of points within each hexagon represents the frequency of observations. 
+#This type of plot is useful for visualizing the density of points in regions with high data concentration.
+
+sns.pairplot(df)
+
+sns.barplot(x=df['Sex'], y=df['Fare'])
+
+sns.countplot(x=df['Pclass'])
+#countplot() will count the occurrences of each unique category in the 'Pclass' variable and display them as bars. 
+#Each bar's height represents the number of observations (or occurrences) for that particular class.
+
+sns.displot(df['Fare'])
+
+sns.displot(df['Fare'], hist=True)
+

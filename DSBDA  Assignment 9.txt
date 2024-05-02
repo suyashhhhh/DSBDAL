@@ -1,0 +1,62 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline 
+import seaborn as sns
+
+df=pd.read_csv('train.csv')
+
+df
+
+#Data preprocessing 
+df.shape
+
+df.columns
+
+df.dtypes
+
+df.info
+
+df.isnull().sum()
+
+df.describe()
+
+#Data Visualization 
+sns.countplot(x=df['Survived'])
+
+sns.countplot(x=df['Sex'])
+
+df['Sex'].value_counts().plot(kind='pie', autopct = '%.2f')
+#In thde context of a pie chart, the autopct parameter is used to control the display of percentage values on the chart. 
+#When you set autopct='%1.1f%%', it formats the percentages to one decimal place and appends a percentage sign. 
+#For example, if a category represents 25% of the total, it will be displayed as “25.0%”. The autopct argument is particularly useful when creating pie charts to show the proportion of each category relative to the whole. 
+
+dff['Survived'].value_counts().plot(kind = 'pie',autopact = '%.2f')
+
+sns.barplot(x=df['Sex'],y=df['Survived'])
+
+sns.barplot(x=df['Survived'],y=df['Age'])
+
+sns.barplot(x=df['Sex'],y=df['Age'],hue=df['Survived'])
+
+sns.boxplot(x=df['Sex'],y=df['Age'])
+
+sns.boxplot(x=df['Sex'],y=df['Age'],hue=df['Survived'])
+
+pd.crosstab(df['Sex'],df['Survived'])
+#Certainly! The pd.crosstab() function in pandas computes a simple cross-tabulation of two or more factors. 
+#It allows you to create a frequency table that shows the counts of occurrences for different combinations of values in specified columns.
+
+pd.crosstab(df['Age'],df['Survived'])
+
+sns.heatmap(pd.crosstab(df['Sex'],df['Survived']))
+
+sns.heatmap(pd.crosstab(df['Age'],df['Survived']))
+
+
+sns.clustermap(pd.crosstab(df['Sex'],df['Survived']))
+#use for visualising hirarchiel clustering
+#clustermap is a powerful tool for exploring the structure and relationships within complex datasets, especially when dealing with high-dimensional data or when you want to identify groups of similar observations 
+
+sns.clustermap(pd.crosstab(df['Age'],df['Survived']))
+

@@ -1,0 +1,31 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+import seaborn as sns
+
+df=pd.read_csv("iris.csv")
+df
+
+df.shape
+df.columns
+df.dtypes
+df.info()
+df.describe()
+sns.displot(df['SepalLength'],kde=True)
+sns.displot(df['SepalWidth'])
+sns.displot(df['PetalLength'])
+sns.displot(df['PetalWidth'])
+plt.hist(df['PetalLength'])
+plt.hist(df['PetalWidth'])
+plt.hist(df['SepalLength'])
+plt.hist(df['SepalWidth'])
+sns.boxplot(df['SepalLength'])
+sns.boxplot(df['SepalWidth'])
+sns.boxplot(df['PetalLength'])
+sns.boxplot(df['PetalWidth'])
+sns.boxplot(data =df, x=df['SepalLength'],y=df['Name'])
+sns.boxplot(data =df, x=df['Name'],y=df['SepalWidth'])
+sns.boxplot(data =df, x=df['Name'],y=df['PetalWidth'])
+sns.boxplot(data =df, x=df['Name'],y=df['PetalLength'])
+

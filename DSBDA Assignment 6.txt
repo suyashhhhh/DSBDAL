@@ -1,0 +1,119 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+import seaborn as sns
+
+df=pd.read_csv('Iris.csv')
+
+df
+
+df.shape
+
+df.columns
+
+df.dtypes
+
+df.info
+
+df.describe()
+
+df.isnull()
+
+df.isnull().sum()
+
+#df.drop(columns='id',inplace=true)
+
+df.head()
+
+sns.relplot(data=df, x='SepalWidth',y='SepalLength', hue='Name')
+
+sns.relplot(data=df, x='PetalWidth',y='PetalLength', hue='Name')
+
+sns.pairplot(df,hue='Name')
+
+plt.figure(figsize=(15,10))
+plt.subplot(2,2,1)
+sns.boxplot(data=df , x='Name', y='PetalLength')
+plt.subplot(2,2,2)
+sns.boxplot(data=df , x='Name', y='PetalWidth')
+plt.subplot(2,2,3)
+sns.boxplot(data=df , x='Name', y='SepalLength')
+plt.subplot(2,2,4)
+sns.boxplot(data=df , x='Name', y='SepalWidth')
+
+sns.boxplot(data=df).set_title("Distribution of sepal-Length, Sepal-Width, Petal-length,Petal-Width")
+
+df.drop(columns='Name')
+
+df.corr
+
+plt.subplots(figsize=(8,8))
+sns.heatmap(df.corr(),annot=True, fmt="f").set_title("Corelation of attributes")
+
+x=df.iloc[:,0:4].values
+x
+
+y=df.iloc[:,4].values
+y
+
+from sklearn.preprocessing import LabelEncoder
+le =LabelEncoder()
+y=le.fit_transform(y)
+y
+
+#splitting data into 70% traning and 30% testing 
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.3,random_state=42)
+
+x_train
+
+x_train.shape
+
+x_test
+
+x_test.shape
+
+y_train
+
+y_train.shape
+
+y_test
+
+y_test.shape
+
+#initializing Naive Bayes Model 
+from sklearn.naive_bayes import GaussianNB 
+model=GaussianNB()
+model.fit(x_train,y_train)
+#fit(): This method is used to train the model on a dataset. It takes two main arguments:
+1)Training Data (X_train)
+2)Target Labels (y_train) 
+
+#prediction 
+prediction=model.predict(x_test)
+
+prediction
+
+y_test
+
+#confusion matrix 
+from sklearn.metrics import confusion_matrix
+cm=confusion_matrix(y_test,prediction)
+cm
+
+#accuracy
+from sklearn.metrics import accuracy_score
+accuracy=accuracy_score(y_test,prediction)
+accuracy
+
+#precision
+from sklearn.metrics import precision_score
+precision=precision_score(y_test,prediction,average='micro')*100
+precision
+
+#reacall
+from sklearn.metrics import recall_score
+recall=recall_score(y_test,prediction,average='micro')*100
+recall
+
